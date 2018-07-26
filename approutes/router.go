@@ -3,9 +3,10 @@ package approutes
 import (
 	"net/http"
 
+	"approutes/server"
+	"middlewares"
+
 	"github.com/gorilla/mux"
-	"github.com/spkellydev/learngolang/src/approutes/server"
-	"github.com/spkellydev/learngolang/src/middlewares"
 )
 
 // NewRouter testable router function

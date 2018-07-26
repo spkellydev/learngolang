@@ -3,8 +3,9 @@ package main
 import (
 	"net/http"
 
+	"approutes"
+
 	"github.com/gorilla/mux"
-	"github.com/spkellydev/learngolang/src/approutes"
 )
 
 // testable router function
