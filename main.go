@@ -24,6 +24,7 @@ func main() {
 	http.ListenAndServe(":80", r)
 }
 
+// useless func
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello world!")
 }
