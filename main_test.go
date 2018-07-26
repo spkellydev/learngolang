@@ -2,12 +2,11 @@ package main
 
 import (
 	"io/ioutil"
+	"learngolang/approutes"
+	"learngolang/approutes/server"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/spkellydev/learngolang/src/approutes"
-	"github.com/spkellydev/learngolang/src/approutes/server"
 )
 
 func TestHandler(t *testing.T) {

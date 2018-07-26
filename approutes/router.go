@@ -1,10 +1,9 @@
 package approutes
 
 import (
+	"learngolang/approutes/middlewares"
+	"learngolang/approutes/server"
 	"net/http"
-
-	"approutes/server"
-	"middlewares"
 
 	"github.com/gorilla/mux"
 )

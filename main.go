@@ -1,9 +1,8 @@
 package main
 
 import (
+	"learngolang/approutes"
 	"net/http"
-
-	"approutes"
 
 	"github.com/gorilla/mux"
 )
