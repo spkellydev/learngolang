@@ -196,7 +196,7 @@ func main() {
     r := mux.NewRouter()
 
     // This will serve files under http://localhost:8000/static/<filename>
-    r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(dir))))
+    r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.learngolang(http.Dir(dir))))
 
     srv := &http.Server{
         Handler:      r,

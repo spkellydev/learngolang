@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/spkellydev/fileserver/src/approutes"
-	"github.com/spkellydev/fileserver/src/approutes/server"
+	"github.com/spkellydev/learngolang/src/approutes"
+	"github.com/spkellydev/learngolang/src/approutes/server"
 )
 
 func TestHandler(t *testing.T) {

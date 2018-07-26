@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/spkellydev/fileserver/src/approutes"
+	"github.com/spkellydev/learngolang/src/approutes"
 )
 
 // testable router function

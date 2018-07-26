@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/spkellydev/fileserver/src/approutes/server"
-	"github.com/spkellydev/fileserver/src/middlewares"
+	"github.com/spkellydev/learngolang/src/approutes/server"
+	"github.com/spkellydev/learngolang/src/middlewares"
 )
 
 // NewRouter testable router function
