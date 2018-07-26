@@ -5,6 +5,9 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/spkellydev/fileserver/src/approutes"
+	"github.com/spkellydev/fileserver/src/approutes/server"
 )
 
 func TestHandler(t *testing.T) {
@@ -24,7 +27,7 @@ func TestHandler(t *testing.T) {
 
 	// Create an HTTP handler from our handler function
 	// defined in main.go
-	hf := http.HandlerFunc(handler)
+	hf := http.HandlerFunc(server.NonStaticResourceHandler)
 
 	// Serve the HTTP request to our recorder
 	// executes the handler that we want to test
@@ -33,11 +36,7 @@ func TestHandler(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
 
-	expected := `Hello world!`
-	actual := recorder.Body.String()
-	if actual != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v", actual, expected)
-	}
+	// TOOD -- render static content and check output in context
 
 }
 
@@ -90,7 +89,7 @@ func TestHandler(t *testing.T) {
 // }
 
 func TestRouterForNonExistentRoute(t *testing.T) {
-	r := newRouter()
+	r := approutes.NewRouter()
 	mockServer := httptest.NewServer(r)
 	// Most of the code is similar. The only difference is that now we make a
 	//request to a route we know we didn't define, like the `POST /hello` route.
