@@ -1,8 +1,9 @@
 package main
 
 import (
-	"learngolang/approutes"
 	"net/http"
+
+	"github.com/spkellydev/learngolang/approutes"
 
 	"github.com/gorilla/mux"
 )
@@ -15,5 +16,5 @@ func newRouter() *mux.Router {
 
 func main() {
 	r := newRouter()
-	http.ListenAndServe(":8000", r)
+	http.ListenAndServe(":8080", r)
 }

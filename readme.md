@@ -9,6 +9,7 @@
 - ~~Console logger for HTTP requests~~
 - ~~File logger~~
 - Grouped routing
+- Trailingslashit ?
 - JWT
 - Authentication system
 - User roles

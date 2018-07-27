@@ -10,3 +10,8 @@ import (
 func NonStaticResourceHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Go docs for noobs")
 }
+
+// PostsHandler handles all things related to blog posts
+func PostsHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Go docs for noobs")
+}
