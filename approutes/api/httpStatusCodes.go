@@ -11,6 +11,16 @@ var RedirectError struct {
 	Message string
 }
 
+// HandleRouteErr accepts the ResponseWrite and the status code to abstract
+// some of the bad parts of Go error handling
+func HandleRouteErr(err error, w http.ResponseWriter, r *http.Request, statusCode int) {
+	if err != nil {
+		ErrorRequestHandler(w, r, statusCode) // handle the error for the supplied status code
+		return
+	}
+	return
+}
+
 // Get404 is the default error handler for Bad Requests
 func Get404(w http.ResponseWriter, r *http.Request) {
 	if len(RedirectError.Message) == 0 {
@@ -49,7 +59,8 @@ func ErrorRequestHandler(w http.ResponseWriter, r *http.Request, statusCode int)
 	case statusCode >= 500:
 		RedirectError.Message = "Your request literally broke the internet. Good job"
 		http.Redirect(w, r, "/500", http.StatusTemporaryRedirect)
+		break
 	default:
-		return
+		break
 	}
 }

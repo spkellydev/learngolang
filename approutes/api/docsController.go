@@ -10,35 +10,13 @@ import (
 	"github.com/spkellydev/learngolang/db"
 )
 
-// handleRouteErr accepts the ResponseWrite and the status code to abstract
-// some of the bad parts of Go error handling
-func handleRouteErr(err error, w http.ResponseWriter, r http.Request, statusCode int) {
-	ok := func() bool {
-		if err != nil {
-			return false // trigger panic
-		}
-		return true // continue onward
-	}
-
-	if !ok() {
-		ErrorRequestHandler(w, &r, statusCode)
-	}
-
-	return
-}
-
-// Docs is
-type Docs struct {
-	Title string
-	News  string
-}
-
 // CreateDocHandler handles the POST request to create documentation
 func CreateDocHandler(w http.ResponseWriter, r *http.Request) {
 	doc := db.Doc{}
 
-	err := r.ParseForm()
-	handleRouteErr(err, w, *r, http.StatusBadRequest)
+	if err := r.ParseForm(); err != nil {
+		HandleRouteErr(err, w, r, http.StatusBadRequest)
+	}
 
 	// pull html input's name attribute
 	doc.Name = r.Form.Get("name")
@@ -46,23 +24,24 @@ func CreateDocHandler(w http.ResponseWriter, r *http.Request) {
 	doc.Type = r.Form.Get("type")
 
 	// enter doc into database
-	err = db.DocsStore.CreateOne(&doc)
-	handleRouteErr(err, w, *r, http.StatusInternalServerError)
+	if err := db.DocsStore.CreateOne(&doc); err != nil {
+		HandleRouteErr(err, w, r, http.StatusForbidden)
+	}
 
-	http.Redirect(w, r, "/docs", http.StatusFound)
+	http.Redirect(w, r, "/api/docs", http.StatusFound)
 }
 
 // GetDocHandler Handles the GET request for documentation
 func GetDocHandler(w http.ResponseWriter, r *http.Request) {
 	query := mux.Vars(r)["id"]     // get id from route parameter
 	id, err := strconv.Atoi(query) // convert route parameter into int from string
-	handleRouteErr(err, w, *r, http.StatusInternalServerError)
+	HandleRouteErr(err, w, r, http.StatusInternalServerError)
 
 	docs, err := db.DocsStore.GetOne(id)
-	handleRouteErr(err, w, *r, http.StatusInternalServerError)
+	HandleRouteErr(err, w, r, http.StatusInternalServerError)
 
 	docsByteList, err := json.Marshal(docs)
-	handleRouteErr(err, w, *r, http.StatusInternalServerError)
+	HandleRouteErr(err, w, r, http.StatusInternalServerError)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(docsByteList)
@@ -71,10 +50,10 @@ func GetDocHandler(w http.ResponseWriter, r *http.Request) {
 // GetDocsHandler Handles the GET request for documentation
 func GetDocsHandler(w http.ResponseWriter, r *http.Request) {
 	docs, err := db.DocsStore.GetAll()
-	handleRouteErr(err, w, *r, http.StatusInternalServerError)
+	HandleRouteErr(err, w, r, http.StatusForbidden)
 
 	docsByteList, err := json.Marshal(docs)
-	handleRouteErr(err, w, *r, http.StatusInternalServerError)
+	HandleRouteErr(err, w, r, http.StatusInternalServerError)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(docsByteList)

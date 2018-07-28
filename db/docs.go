@@ -1,5 +1,7 @@
 package db
 
+import "errors"
+
 // Doc is a model who's responsibility it is to return the documentation table back to the application
 type Doc struct {
 	ID      int    // serial primary key
@@ -17,12 +19,34 @@ type method struct {
 	Params      []string
 }
 
+// Error handles API level errors
+type Error interface {
+	Error() string
+}
+
+type errorString struct {
+	s string
+}
+
+func (e *errorString) Error() string {
+	return e.s
+}
+
+// New returns an error that formats as the given text.
+func New(text string) error {
+	return &errorString{text}
+}
+
 // CreateOne allows for creating one documentation row
 // all types required
 func (store *Store) CreateOne(doc *Doc) error {
 	// Query the database for values from documentation table
 	// Todo -- Automate builder
 	// Todo -- doc.Methods needs to be Marshaled into string
+	if len(doc.Name) == 0 {
+		requestError := errors.New("400")
+		return requestError
+	}
 	_, err := store.Db.Query("INSERT INTO documentation(name, type, package) VALUES ($1, $2, $3)", doc.Name, doc.Type, doc.Package)
 	return err
 }

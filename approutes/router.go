@@ -4,24 +4,11 @@ import (
 	"net/http"
 
 	"github.com/spkellydev/learngolang/approutes/api"
+	"github.com/spkellydev/learngolang/approutes/backend"
 	"github.com/spkellydev/learngolang/approutes/middlewares"
 
 	"github.com/gorilla/mux"
 )
-
-func docs(r *mux.Router) {
-	// Documentation API
-	r.Handle("/api/docs", middlewares.Logger(http.HandlerFunc(api.GetDocsHandler))).Methods("GET")
-	r.Handle("/api/docs", middlewares.Logger(http.HandlerFunc(api.CreateDocHandler))).Methods("POST")
-	r.Handle("/api/docs/{id}", middlewares.Logger(http.HandlerFunc(api.GetDocHandler))).Methods("GET")
-	r.Handle("/api/docs/{id}/update", middlewares.Logger(http.HandlerFunc(api.UpdateDocHandler))).Methods("PUT")
-	r.Handle("/api/docs/{id}/destroy", middlewares.Logger(http.HandlerFunc(api.DeleteDocHandler))).Methods("DELETE")
-}
-
-func errors(r *mux.Router) {
-	r.Handle("/404", middlewares.Logger(http.HandlerFunc(api.Get404))).Methods("GET")
-	r.Handle("/500", middlewares.Logger(http.HandlerFunc(api.Get500))).Methods("GET")
-}
 
 // NewRouter testable router function
 func NewRouter() *mux.Router {
@@ -29,7 +16,8 @@ func NewRouter() *mux.Router {
 
 	// Server handled files
 	// example: api
-	docs(r)
+	docsAPI(r)
+	backendDocs(r)
 	errors(r)
 
 	// Static files, SPA
@@ -38,4 +26,24 @@ func NewRouter() *mux.Router {
 	r.PathPrefix("/").Handler(staticFileHandler).Methods("GET")                // prefix path for handler
 
 	return r
+}
+
+func backendDocs(r *mux.Router) {
+	// Documentation client/backend routes
+	r.Handle("/docs/{id}/edit", http.HandlerFunc(backend.DocsBackendUpdateHandler)).Methods("GET")
+}
+
+func docsAPI(r *mux.Router) {
+	// Documentation API routes
+	r.Handle("/api/docs", middlewares.Logger(http.HandlerFunc(api.GetDocsHandler))).Methods("GET")
+	r.Handle("/api/docs", middlewares.Logger(http.HandlerFunc(api.CreateDocHandler))).Methods("POST")
+	r.Handle("/api/docs/{id}", middlewares.Logger(http.HandlerFunc(api.GetDocHandler))).Methods("GET")
+	r.Handle("/api/docs/{id}/update", middlewares.Logger(http.HandlerFunc(api.UpdateDocHandler))).Methods("PUT")
+	r.Handle("/api/docs/{id}/destroy", middlewares.Logger(http.HandlerFunc(api.DeleteDocHandler))).Methods("DELETE")
+}
+
+func errors(r *mux.Router) {
+	// Http status code handlers
+	r.Handle("/404", middlewares.Logger(http.HandlerFunc(api.Get404))).Methods("GET")
+	r.Handle("/500", middlewares.Logger(http.HandlerFunc(api.Get500))).Methods("GET")
 }

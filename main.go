@@ -1,8 +1,6 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -20,35 +18,16 @@ func newRouter() *mux.Router { // testable router function
 	return r                   // release the router
 }
 
-// connection to psql database
-func connect() {
-	dbpass := os.Getenv("DBPASS") // godotenv
-	dbname := os.Getenv("DBNAME") // godotenv
-
-	// create a connection string to the database
-	connString := fmt.Sprintf("password=%s dbname=%s sslmode=%s", dbpass, dbname, "disable")
-	Db, err := sql.Open("postgres", connString)
-	if err != nil {
-		panic(err)
-	}
-
-	err = Db.Ping() // check connection
-	if err != nil {
-		panic(err)
-	}
-
-	// initialize the store with Db connection
-	db.InitStore(&db.Store{Db: Db})
-}
-
 func main() {
 	err := dotEnv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
+	dbpass := os.Getenv("DBPASS") // godotenv
+	dbname := os.Getenv("DBNAME") // godotenv
 	// connect to database
-	connect()
+	db.Connect(dbpass, dbname)
 
 	r := newRouter()
 	http.ListenAndServe(":8000", r)
