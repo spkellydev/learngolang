@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/spkellydev/learngolang/approutes"
-	"github.com/spkellydev/learngolang/approutes/server"
+	"github.com/spkellydev/learngolang/approutes/api"
 )
 
 func TestHandler(t *testing.T) {
@@ -27,7 +27,7 @@ func TestHandler(t *testing.T) {
 
 	// Create an HTTP handler from our handler function
 	// defined in main.go
-	hf := http.HandlerFunc(server.GetDocsHandler)
+	hf := http.HandlerFunc(api.GetDocsHandler)
 
 	// Serve the HTTP request to our recorder
 	// executes the handler that we want to test
@@ -45,7 +45,7 @@ func TestHandler(t *testing.T) {
 // 	r := newRouter()
 // 	mockServer := httptest.NewServer(r)
 
-// 	resp, err := http.Get(mockServer.URL + "/")
+// 	resp, err := http.Get(mockapi.apiURL + "/")
 // 	if err != nil {
 // 		t.Fatal(err)
 // 	}

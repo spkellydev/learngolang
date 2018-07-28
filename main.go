@@ -15,10 +15,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// testable router function
-func newRouter() *mux.Router {
-	r := approutes.NewRouter()
-	return r
+func newRouter() *mux.Router { // testable router function
+	r := approutes.NewRouter() // approutes/router.go
+	return r                   // release the router
 }
 
 // connection to psql database
