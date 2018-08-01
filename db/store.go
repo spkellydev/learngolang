@@ -4,7 +4,7 @@ import "database/sql"
 
 // StoreInterface provides and interface for every model to give them default functionality
 // uses Doc from docs.go
-type StoreInterface []interface {
+type StoreInterface interface {
 	GetAll() ([]*Doc, error)
 	// GetOne() (*Doc, error)
 	CreateOne(model *Doc) error
@@ -21,9 +21,6 @@ type Store struct {
 var DocsStore StoreInterface
 
 // InitStore is the db runner
-func InitStore(name string, s StoreInterface) {
-	switch name {
-	case "docs":
-		DocsStore = s
-	}
+func InitStore(s StoreInterface) {
+	DocsStore = s
 }

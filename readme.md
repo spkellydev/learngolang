@@ -8,6 +8,8 @@
 
 - ~~Console logger for HTTP requests~~
 - ~~File logger~~
+- .env
+- Connect to database
 - Grouped routing
 - JWT
 - Authentication system
