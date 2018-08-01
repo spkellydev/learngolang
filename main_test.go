@@ -2,11 +2,12 @@ package main
 
 import (
 	"io/ioutil"
-	"learngolang/approutes"
-	"learngolang/approutes/server"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/spkellydev/learngolang/approutes"
+	"github.com/spkellydev/learngolang/approutes/server"
 )
 
 func TestHandler(t *testing.T) {
@@ -26,7 +27,7 @@ func TestHandler(t *testing.T) {
 
 	// Create an HTTP handler from our handler function
 	// defined in main.go
-	hf := http.HandlerFunc(server.NonStaticResourceHandler)
+	hf := http.HandlerFunc(server.GetDocsHandler)
 
 	// Serve the HTTP request to our recorder
 	// executes the handler that we want to test

@@ -38,7 +38,7 @@ func connect() {
 		panic(err)
 	}
 
-	// initialize the store
+	// initialize the store with Db connection
 	db.InitStore(&db.Store{Db: Db})
 }
 

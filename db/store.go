@@ -8,7 +8,7 @@ type StoreInterface interface {
 	GetAll() ([]*Doc, error)
 	GetOne(id int) (*Doc, error)
 	CreateOne(model *Doc) error
-	// UpdateOne(model *Doc) error
+	UpdateOne(model *Doc) error
 	DeleteOne(id int) error
 }
 

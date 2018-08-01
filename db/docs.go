@@ -45,6 +45,12 @@ func (store *Store) GetOne(id int) (*Doc, error) {
 	return doc, nil
 }
 
+// UpdateOne will take an id of a doc and update it with the new values
+func (store *Store) UpdateOne(doc *Doc) error {
+	_, err := store.Db.Query("UPDATE documentation SET name = $1, type = $2, package = $3 WHERE id = $4", &doc.Name, &doc.Type, &doc.Package, &doc.ID)
+	return err
+}
+
 // DeleteOne removes a doc from the db
 func (store *Store) DeleteOne(id int) error {
 	_, err := store.Db.Query("DELETE FROM documentation WHERE id in ($1)", id)

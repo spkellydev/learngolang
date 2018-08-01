@@ -38,3 +38,13 @@
 2018/08/01 04:15:09 [1.0434ms] - localhost:8000/api/docs@[::1]:51498 
 2018/08/01 04:15:18 [2.9278ms] - localhost:8000/api/docs/2/destroy@[::1]:51753 
 2018/08/01 04:15:22 [60.7894ms] - localhost:8000/api/docs@[::1]:51498 
+2018/08/01 05:14:37 [0s] - localhost:8000/api/docs/1/update@[::1]:60323 
+2018/08/01 05:14:45 [1.9895ms] - localhost:8000/api/docs@[::1]:60376 
+2018/08/01 05:16:26 [0s] - localhost:8000/api/docs/1/update@[::1]:60627 
+2018/08/01 05:16:42 [0s] - localhost:8000/api/docs/1/update@[::1]:60627 
+2018/08/01 05:17:07 [0s] - localhost:8000/api/docs/1/update@[::1]:60729 
+2018/08/01 05:17:29 [978.2µs] - localhost:8000/api/docs/1/update@[::1]:60783 
+2018/08/01 05:18:33 [975.8µs] - localhost:8000/api/docs/1/update@[::1]:60939 
+2018/08/01 05:18:54 [977.4µs] - localhost:8000/api/docs/1/update@[::1]:60993 
+2018/08/01 05:20:24 [2.9298ms] - localhost:8000/api/docs/1/update@[::1]:61227 
+2018/08/01 05:20:38 [51.7642ms] - localhost:8000/api/docs@[::1]:61261 

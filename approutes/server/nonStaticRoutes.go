@@ -93,6 +93,42 @@ func GetDocsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(docsByteList)
 }
 
+// UpdateDocHandler will update
+func UpdateDocHandler(w http.ResponseWriter, r *http.Request) {
+	doc := &db.Doc{}
+	if err := r.ParseForm(); err != nil {
+		fmt.Println(fmt.Errorf("Error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		panic(err)
+	}
+
+	// convert query request to appropriate data type
+	// int
+	fmt.Printf("EE: %s", r.Form.Get("type"))
+
+	query := r.Form.Get("id")
+	id, err := strconv.Atoi(query)
+	if err != nil {
+		fmt.Printf("Error: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// TODO -- marshal request into struct
+	doc.ID = id
+	doc.Type = r.Form.Get("type")
+	doc.Package = r.Form.Get("package")
+	doc.Name = r.Form.Get("name")
+
+	err = db.DocsStore.UpdateOne(doc)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/api/docs", http.StatusAccepted)
+}
+
 // DeleteDocHandler will delete one item from the documentation database
 func DeleteDocHandler(w http.ResponseWriter, r *http.Request) {
 	query := mux.Vars(r)["id"]
