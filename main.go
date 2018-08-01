@@ -48,7 +48,7 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	go connect()
+	connect()
 
 	r := newRouter()
 	http.ListenAndServe(":8000", r)
