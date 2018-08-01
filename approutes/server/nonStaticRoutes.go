@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
+	"github.com/gorilla/mux"
 	"github.com/spkellydev/learngolang/db"
 )
 
@@ -20,24 +22,6 @@ func handleRouteErr(err error) bool {
 type Docs struct {
 	Title string
 	News  string
-}
-
-// GetDocsHandler Handles the GET request for documentation
-func GetDocsHandler(w http.ResponseWriter, r *http.Request) {
-	docs, err := db.DocsStore.GetAll()
-	if ok := handleRouteErr(err); !ok {
-		w.WriteHeader(http.StatusInternalServerError)
-		panic(err)
-	}
-
-	docsByteList, err := json.Marshal(docs)
-	if ok := handleRouteErr(err); !ok {
-		w.WriteHeader(http.StatusInternalServerError)
-		panic(err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(docsByteList)
 }
 
 // CreateDocHandler handles the POST request to create documentation
@@ -65,4 +49,64 @@ func CreateDocHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, "/docs", http.StatusFound)
+}
+
+// GetDocHandler Handles the GET request for documentation
+func GetDocHandler(w http.ResponseWriter, r *http.Request) {
+	query := mux.Vars(r)["id"]     // get id from route parameter
+	id, err := strconv.Atoi(query) // convert route parameter into int from string
+	if err != nil {                // handler error
+		fmt.Println("whoops, GetDocHanlder")
+	}
+
+	docs, err := db.DocsStore.GetOne(id)
+	if ok := handleRouteErr(err); !ok {
+		w.WriteHeader(http.StatusInternalServerError)
+		panic(err)
+	}
+
+	docsByteList, err := json.Marshal(docs)
+	if ok := handleRouteErr(err); !ok {
+		w.WriteHeader(http.StatusInternalServerError)
+		panic(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(docsByteList)
+}
+
+// GetDocsHandler Handles the GET request for documentation
+func GetDocsHandler(w http.ResponseWriter, r *http.Request) {
+	docs, err := db.DocsStore.GetAll()
+	if ok := handleRouteErr(err); !ok {
+		w.WriteHeader(http.StatusInternalServerError)
+		panic(err)
+	}
+
+	docsByteList, err := json.Marshal(docs)
+	if ok := handleRouteErr(err); !ok {
+		w.WriteHeader(http.StatusInternalServerError)
+		panic(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(docsByteList)
+}
+
+// DeleteDocHandler will delete one item from the documentation database
+func DeleteDocHandler(w http.ResponseWriter, r *http.Request) {
+	query := mux.Vars(r)["id"]
+	id, err := strconv.Atoi(query)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		panic(err)
+	}
+
+	err = db.DocsStore.DeleteOne(id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		panic(err)
+	}
+
+	http.Redirect(w, r, "/api/docs", http.StatusAccepted)
 }

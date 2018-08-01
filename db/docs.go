@@ -2,10 +2,10 @@ package db
 
 // Doc is a model who's responsibility it is to return the documentation table back to the application
 type Doc struct {
-	ID      int
-	Name    string
-	Type    string
-	Package string
+	ID      int    // serial primary key
+	Name    string // varchar 256
+	Type    string // varchar 256
+	Package string // varchar 256
 }
 
 type method struct {
@@ -24,6 +24,30 @@ func (store *Store) CreateOne(doc *Doc) error {
 	// Todo -- Automate builder
 	// Todo -- doc.Methods needs to be Marshaled into string
 	_, err := store.Db.Query("INSERT INTO documentation(name, type, package) VALUES ($1, $2, $3)", doc.Name, doc.Type, doc.Package)
+	return err
+}
+
+// GetOne retreives a row from the database where the id is equivalent
+func (store *Store) GetOne(id int) (*Doc, error) {
+	// Query the database for an id
+	row, err := store.Db.Query("SELECT * FROM documentation WHERE id IN ($1)", id)
+	if err != nil {
+		return nil, err
+	}
+
+	doc := &Doc{}
+	for row.Next() {
+		if err := row.Scan(&doc.ID, &doc.Name, &doc.Package, &doc.Type); err != nil {
+			return nil, err
+		}
+	}
+
+	return doc, nil
+}
+
+// DeleteOne removes a doc from the db
+func (store *Store) DeleteOne(id int) error {
+	_, err := store.Db.Query("DELETE FROM documentation WHERE id in ($1)", id)
 	return err
 }
 

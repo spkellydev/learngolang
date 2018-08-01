@@ -6,10 +6,10 @@ import "database/sql"
 // uses Doc from docs.go
 type StoreInterface interface {
 	GetAll() ([]*Doc, error)
-	// GetOne() (*Doc, error)
+	GetOne(id int) (*Doc, error)
 	CreateOne(model *Doc) error
 	// UpdateOne(model *Doc) error
-	// DeleteOne(model *Doc) error
+	DeleteOne(id int) error
 }
 
 // Store holds the native go sql methods

@@ -11,8 +11,10 @@ import (
 
 func docs(r *mux.Router) {
 	// Documentation API
-	r.Handle("/docs", middlewares.Logger(http.HandlerFunc(server.GetDocsHandler))).Methods("GET")
-	r.Handle("/docs", middlewares.Logger(http.HandlerFunc(server.CreateDocHandler))).Methods("POST")
+	r.Handle("/api/docs", middlewares.Logger(http.HandlerFunc(server.GetDocsHandler))).Methods("GET")
+	r.Handle("/api/docs", middlewares.Logger(http.HandlerFunc(server.CreateDocHandler))).Methods("POST")
+	r.Handle("/api/docs/{id}", middlewares.Logger(http.HandlerFunc(server.GetDocHandler))).Methods("GET")
+	r.Handle("/api/docs/{id}/destroy", middlewares.Logger(http.HandlerFunc(server.DeleteDocHandler))).Methods("DELETE")
 }
 
 // NewRouter testable router function
