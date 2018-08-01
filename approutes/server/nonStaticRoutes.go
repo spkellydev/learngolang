@@ -11,9 +11,9 @@ import (
 func handleRouteErr(err error) bool {
 	if err != nil {
 		fmt.Println(fmt.Errorf("Error: %v", err))
-		return false
+		return false // trigger panic
 	}
-	return true
+	return true // continue onward
 }
 
 // Docs is

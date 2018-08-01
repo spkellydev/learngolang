@@ -10,6 +10,7 @@ import (
 )
 
 func docs(r *mux.Router) {
+	// Documentation API
 	r.Handle("/docs", middlewares.Logger(http.HandlerFunc(server.GetDocsHandler))).Methods("GET")
 	r.Handle("/docs", middlewares.Logger(http.HandlerFunc(server.CreateDocHandler))).Methods("POST")
 }

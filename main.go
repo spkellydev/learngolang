@@ -33,7 +33,7 @@ func connect() {
 		panic(err)
 	}
 
-	err = Db.Ping()
+	err = Db.Ping() // check connection
 	if err != nil {
 		panic(err)
 	}
@@ -48,6 +48,7 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	// connect to database
 	connect()
 
 	r := newRouter()

@@ -28,12 +28,10 @@ func Log(format string, args ...interface{}) {
 // accepts and returns http.Handler
 func Logger(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		t0 := time.Now()      // start timer
-		h.ServeHTTP(w, r)     // serve request
-		t1 := time.Now()      // clock time to serve
-		elapsed := t1.Sub(t0) // initialize benchmark
-
-		// Log
-		Log("[%v] - %s%s@%s \n", elapsed, r.Host, r.URL, r.RemoteAddr)
+		t0 := time.Now()                                               // start timer
+		h.ServeHTTP(w, r)                                              // serve request
+		t1 := time.Now()                                               // clock time to serve
+		elapsed := t1.Sub(t0)                                          // initialize benchmark
+		Log("[%v] - %s%s@%s \n", elapsed, r.Host, r.URL, r.RemoteAddr) // Log
 	})
 }

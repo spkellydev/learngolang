@@ -3,19 +3,22 @@
 ## Dependencies
 
 - Mux
+- GoDotEnv
+- PostGres driver
 
 ## Roadmap
 
 - ~~Console logger for HTTP requests~~
 - ~~File logger~~
-- .env
-- Connect to database
-- Grouped routing
+- ~~.env~~
+- ~~Connect to database~~
+- ~Grouped routing
+- Validate response before hitting database
 - JWT
 - Authentication system
 - User roles
-- Standardized CRUD API
-- Documentation MVC
+- ~Standardized CRUD API
+- ~Documentation MVC
 - etc
 
 #### Helpful functions
